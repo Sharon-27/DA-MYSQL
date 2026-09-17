@@ -1,0 +1,297 @@
+
+Day-12 Date--->17/09/2026
+
+
+Topic:- Normalization
+
+
+Definition:- Normalization is the process of organizing data in a database to reduce data redenduncy and improve data integrity
+
+Types:- 
+1. 1NF--> Atomic values should be present
+
+2.2NF:---> Partially dependence
+
+3.3NF:----> 
+
+
+INSERT INTO enrollment_2nf
+VALUES
+(101, 'Java', 'Kumar', '9876543210'),
+(101, 'Python', 'Ramesh', '9876543211'),
+(102, 'Python', 'Ramesh', '9876543211'),
+(102, 'SQL', 'Suresh', '9876543212'),
+(103, 'Java', 'Kumar', '9876543210'),
+(103, 'SQL', 'Suresh', '9876543212');
+
+
+Entity Relation ship Model-----ER MODEL
+
+The entity relationship(ER) model is a conceptual framework used to describe data relationships in a structured way
+
+----> 3 components:-
+
+1.ENTITY:- TABLES
+
+2.ATTRIBUTE:- COMPOSITE ATTRIBUTE,KEY ATRRIBUTE,MULTIVALUED ATTRIBUTE,DERIVED ATTRIBUTE
+
+3.RELATIONSHIPS:- ONE TO ONE, ONE TO MANY, MANY TO MANY
+
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use da7;
+Database changed
+mysql> show tables;
++---------------------+
+| Tables_in_da7       |
++---------------------+
+| emp                 |
+| employee_attendance |
+| employees           |
+| orders              |
+| products            |
+| projects            |
+| sales               |
+| students            |
+| studentscores       |
++---------------------+
+9 rows in set (0.01 sec)
+
+mysql> CREATE TABLE_STUDENT_DETAILS(
+    -> STUDENT_ID INT,
+    -> student_name VARCH^C
+mysql> CREATE TABLE student_details(
+    -> student_id INT,
+    -> student_name VARCHAR(50),
+    -> courses VARCHAR(100),
+    -> trainers VARCHAR(100),
+    -> trainer_phones VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO student_details
+    -> VALUES
+    -> (101, 'Ravi', 'Java, 'Python, 'Kumar, Raamesh', '9876543210, 9876543211'),
+    -> (102, 'Priya, 'Python, SQL', 'Ramesh, Suresh', '9876543211,9876543212'),
+    '> (103, 'Arun, 'Java, SQL', 'Kumar, Suresh', '9876543210, 9876543212');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Python, 'Kumar, Raamesh', '9876543210, 9876543211'),
+(102, 'Priya, 'Python, SQL'' at line 3
+mysql> (101, 'Ravi', 'Java, 'Python, 'Kumar, Raamesh', '9876543210, 9876543211'),
+    -> (102, 'Priya', 'Python, SQL', 'Ramesh, Suresh', '9876543211,9876543212'),
+    -> (103, 'Arun, 'Java, SQL', 'Kumar, Suresh', '9876543210, 9876543212');
+    '> ^C
+mysql> (101, 'Ravi', 'Java, 'Python, 'Kumar, Raamesh', '9876543210, 9876543211'),
+    -> (102, 'Priya', 'Python, SQL', 'Ramesh, Suresh', '9876543211,9876543212'),
+    -> (103, 'Arun', 'Java, SQL', 'Kumar, Suresh', '9876543210, 9876543212');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '101, 'Ravi', 'Java, 'Python, 'Kumar, Raamesh', '9876543210, 9876543211'),
+(102, ' at line 1
+mysql> ^C
+mysql> (101, 'Ravi', 'Java, 'Python', 'Kumar, Raamesh', '9876543210, 9876543211'),
+    '> (102, 'Priya', 'Python, SQL', 'Ramesh, Suresh', '9876543211,9876543212'),
+    '> (103, 'Arun', 'Java, SQL', 'Kumar, Suresh', '9876543210, 9876543212');
+    '>
+    '>
+    '> ^C
+mysql> (103, 'Arun', 'Java, SQL', 'Kumar, Suresh', '9876543210, 9876543212');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '103, 'Arun', 'Java, SQL', 'Kumar, Suresh', '9876543210, 9876543212')' at line 1
+mysql> ^C
+mysql> (101, 'Ravi', 'Java, 'Python', 'Kumar, Raamesh', '9876543210, 9876543211'),
+    '> (102, 'Priya', 'Python, SQL', 'Ramesh, Suresh', '9876543211,9876543212'),
+    '> (103, 'Arun', 'Java, SQL', 'Kumar, Suresh', '9876543210, 9876543212');
+    '> ^C
+mysql> (101, 'Ravi', 'Java, 'Python, 'Kumar, Raamesh', '9876543210, 9876543211'),
+    -> (102, 'Priya','Python, SQL', 'Ramesh, Suresh', '9876543211,9876543212'),
+    -> (103, 'Arun', 'Java, SQL', 'Kumar, Suresh', '9876543210, 9876543212');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '101, 'Ravi', 'Java, 'Python, 'Kumar, Raamesh', '9876543210, 9876543211'),
+(102, ' at line 1
+mysql>
+mysql> ^C
+mysql> CREATE TABLE student_course_1nf (
+    -> student_id INT,
+    -> student_name VARCHAR(50),
+    -> course VARCHAR(30),
+    -> trainer VARCHAR(50),
+    -> trainer_phone VARCHAR(15)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO student_course_1nf
+    -> VALUES
+    -> (101, 'Ravi', 'Java', 'Kumar', '9876543210'),
+    -> (101, 'Ravi', 'Python', 'Ramesh', '9876543211'),
+    -> (102, 'Priya', 'Python', 'Ramesh', '9876543211'),
+    -> (102, 'Priya', 'SQL', 'Suresh', '9876543212'),
+    -> (103, 'Arun', 'Java', 'Kumar', '9876543210'),
+    -> (103, 'Arun', 'SQL', 'Suresh', '9876543212');
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM student_course_1nf;
++------------+--------------+--------+---------+---------------+
+| student_id | student_name | course | trainer | trainer_phone |
++------------+--------------+--------+---------+---------------+
+|        101 | Ravi         | Java   | Kumar   | 9876543210    |
+|        101 | Ravi         | Python | Ramesh  | 9876543211    |
+|        102 | Priya        | Python | Ramesh  | 9876543211    |
+|        102 | Priya        | SQL    | Suresh  | 9876543212    |
+|        103 | Arun         | Java   | Kumar   | 9876543210    |
+|        103 | Arun         | SQL    | Suresh  | 9876543212    |
++------------+--------------+--------+---------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> create table student_2nf(
+    -> student_id int primary key,
+    -> student_name varchar(50)
+    -> );
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> insert into student_2nf values
+    -> (101,'ravi'),
+    -> (102,'priya'),
+    -> (103,'arun');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select*from student_2nf;
++------------+--------------+
+| student_id | student_name |
++------------+--------------+
+|        101 | ravi         |
+|        102 | priya        |
+|        103 | arun         |
++------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> create table enrollment_2nf(
+    -> student_id int,
+    -> course varchar(30),
+    -> trainer varchar(50),
+    -> trainer_phone varchar(15),
+    -> primary key (student_id, course),
+    -> foreign key (student_id) references student_2nf(student_id)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into enrollment_2nf
+    -> values
+    -> (101, 'java',^C
+mysql> INSERT INTO enrollment_2nf
+    -> VALUES
+    -> (101, 'Java', 'Kumar', '9876543210'),
+    -> (101, 'Python', 'Ramesh', '9876543211'),
+    -> (102, 'Python', 'Ramesh', '9876543211'),
+    -> (102, 'SQL', 'Suresh', '9876543212'),
+    -> (103, 'Java', 'Kumar', '9876543210'),
+    -> (103, 'SQL', 'Suresh', '9876543212');
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select*from enrollment_2nf;
++------------+--------+---------+---------------+
+| student_id | course | trainer | trainer_phone |
++------------+--------+---------+---------------+
+|        101 | Java   | Kumar   | 9876543210    |
+|        101 | Python | Ramesh  | 9876543211    |
+|        102 | Python | Ramesh  | 9876543211    |
+|        102 | SQL    | Suresh  | 9876543212    |
+|        103 | Java   | Kumar   | 9876543210    |
+|        103 | SQL    | Suresh  | 9876543212    |
++------------+--------+---------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> create table trainer_3nf(
+    -> trainer_id int primary key,
+    -> trainer_name varchar(50),
+    -> trainer_phone varchar(15)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into trainer_3nf values
+    -> (1,'kumar','9876543210'),
+    -> (2,'ramesh','9876543211'),
+    -> (3,'suresh','9876543212');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select*from trainer_3nf;
++------------+--------------+---------------+
+| trainer_id | trainer_name | trainer_phone |
++------------+--------------+---------------+
+|          1 | kumar        | 9876543210    |
+|          2 | ramesh       | 9876543211    |
+|          3 | suresh       | 9876543212    |
++------------+--------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> create table course_3nf(
+    -> course_id int primary key,
+    -> course_name varchar(30),
+    -> trainer_id int,
+    -> foreign key (trainer_id) references trainer_3nf(trainer_id)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into course_3nf values
+    -> (1,'java',1),
+    -> (2,'python',2),
+    -> (3,'python',3),
+    -> (4,'SQL',4),
+    -> (5,'java',5),
+    -> (6,'SQL',6);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`da7`.`course_3nf`, CONSTRAINT `course_3nf_ibfk_1` FOREIGN KEY (`trainer_id`) REFERENCES `trainer_3nf` (`trainer_id`))
+mysql> ^C
+mysql> insert into course_3nf values
+    -> (1,'java',1),
+    -> (2,'python',2),
+    -> (3,'sql',3);
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select*from course_3nf;
++-----------+-------------+------------+
+| course_id | course_name | trainer_id |
++-----------+-------------+------------+
+|         1 | java        |          1 |
+|         2 | python      |          2 |
+|         3 | sql         |          3 |
++-----------+-------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> create table enrollment_3nf
+    -> (
+    -> student_id int,
+    -> ^C
+mysql> create table enrollment_3nf(
+    -> student_id int,
+    -> course_id int,
+    -> primary key (student_id, course_id),
+    -> foreign key (student_id) references student_2nf(student_id),
+    -> foreign key (course_id) references course_3nf(course_id)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into enrollment_3nf
+    -> values
+    -> (101, 1),
+    -> (101, 2),
+    -> (102, 2),
+    -> (103, 1),
+    -> (103, 3);
+Query OK, 5 rows affected (0.07 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select*from enrollment_3nf;
++------------+-----------+
+| student_id | course_id |
++------------+-----------+
+|        101 |         1 |
+|        103 |         1 |
+|        101 |         2 |
+|        102 |         2 |
+|        103 |         3 |
++------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql>
+
