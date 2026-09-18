@@ -1,0 +1,470 @@
+DAY-13   ---> DATE:- 18/09/2026
+
+TOPIC:-  SET OPERATORS:-
+
+----
+UNION
+UNION ALL
+INTERSECT
+MINUS/EXCEPT
+
+1.UNION:- 
+
+COMBINE RESULTS FROM TWO QUARIES AND REMOVE DUPLICATE ROWS. COLUMNS MUST HAVE THE SAME NUMBER AND TYPE
+
+2.UNION ALL:-
+ 
+COMBINES RESULTS FROM TWO QUERIES AND INCLUDE ALL ROWS. INCLUDING DUPLICATES. COLUMNS MUST HAVE THE SAME NUMBER AND TYPE
+
+3.INTERSECT:-
+
+RETURNS ROWS THAT ARE COMMON TO BOTH QUERIES. COLUMNS MUST HAVE THE SAME NUMBER AND TYPE.
+
+NOTE:- MYSQL DOESN'T SUPPORT INTERSECT DIRECTLY
+
+4.MINUS/EXCEPT:-
+
+RETURNS ROWS FROM THE FIRST QUERY THAT ARE NOT PRESENT IN THE SECOND QUERY. COLUMNS MUST HAVE THE SAME NUMBER AND TYPE.
+
+
+---->
+
+JOINS 
+-------
+A JOINS IN MYSQL IS USED TO COMBINE ROWS FROM TWO OR MORE TABLES BASED ON RELATED COLUMNS
+
+EXAMPLE
+-----
+EMPLOYEES TABLE---> EMPLOYEE DETAILS
+DEPARTMENT TABLE---> DEPARTMENT DETAILS
+
+IF YOU WANT TO SEE WHICH EMPLOYEE IS BELONGINGS TO WHICH DEPARTMENT. YOU NEED TO JOIN THESE TWO TABLES.
+
+---> WHY DO WE NEED JOINS?
+
+1. TO FETCH DATA FROM MULTIPLE TABLES IN A SINGLE QUERY
+
+2. TO REDUCE DATA DUPLICATION(INSTEAD OF KEEPING EVERYTHING IN ONE TABLE)
+
+3. TO IMPLEMENT RELATIONSHIPS LIKE(ONE-TO-ONE, ONE-TO-MANY, MANY-TO-MANY)
+
+4. TO GENERATE REPORTS AND ANALYTICS COMBINING DIFFERENT DATASETS. 
+
+
+---> TYPES OF JOINS
+---------
+ 1) INNER JOIN
+2)LEFT JOIN
+3)RIGHT JOIN
+4)FULL JOIN
+5)CROSS JOIN'
+6)SELF JOIN
+
+
+1) INNER JOIN:-
+---- 
+RETURNS ONLY THE ROWS THAT HAVE MATCHING VALUES IN BOTH TABLES.
+
+SYNTAX:---
+---
+SELECT COLUMNS
+FROM TABLE1
+INNER JOIN TABLE2
+ON TABLE1.COMMON_COLUMN=TABLE2.COLUMN_COLUMN;
+
+
+
+2) LEFT JOIN:-
+---
+RETURNS ALL ROWS FROM THE LEFT TABLE AND THE MATCHED ROWS FROM THE RIGHT TABLE IF NO MATCH NULL VALUES APPEAR FOR THE RIGHT TABLE_COLUMN
+
+SYNTAX:-
+-------
+SELECT COLUMNS
+FROM TABLE1
+LEFT JOIN TABLE2
+ON TABLE1.COMMON_COLUMN=TABLE2.COLUMN_COLUMN;
+
+
+
+3) RIGHT JOIN:-
+-----
+RETURNS ALL ROWS FROM THE RIGHT TABLE AND THE MATCHED ROWS FROMM THE LEFT,TABLE. IF NO MATCH NULL VALUES APPEAR FOR THE LEFT TABLE COLUMN
+SYNTAX:-
+---
+SELECT COLUMNS
+FROM TABLE1
+RIGHT JOIN TABLE2
+ON TABLE1.COMMON_COLUMN=TABLE2.COLUMN_COLUMN;
+
+
+4)FULL JOIN:-
+----
+TO STIMULATE THE USE THE UNION OF LEFT JOIN AND RIGHT JOIN.
+
+SYNTAX:-
+--
+SELECT COLUMNS
+FROM TABLE1
+LEFT JOIN TABLE2
+ON TABLE1.COMMON_COLUMN=TABLE2.COLUMN_COLUMN;
+UNION
+SELECT COLUMNS
+FROM TABLE1
+RIGHT JOIN TABLE2
+ON TABLE1.COMMON_COLUMN=TABLE2.COMMON_COLUMN;
+
+
+5) CROSS JOIN:-
+---
+RETURNS CARTESIAN PRODUCT --> EVERY ROW FROM THE FIRST TABLE WITH EVERY ROW FROM THE SECOND TABLE.
+---
+SYNTAX
+
+SELECT COLUMNS
+FROM TABLE1
+CROSS JOIN TABLE2;
+
+
+6) SELF JOIN:-
+----
+
+A TABLE JOINED WITH ITSELF.
+
+SYNTAX:-
+
+SELECT A.COLUMNS,B.COLUMNS
+FROM TABLE1 A
+INNER JOIN TABLE1 B
+ON A.COMMON_COLUMN=B.COMMON_COLUMN;
+
+
+
+mysql> USE DA7;
+Database changed
+mysql> SHOW TABLES;
++---------------------+
+| Tables_in_da7       |
++---------------------+
+| course_3nf          |
+| emp                 |
+| employee_attendance |
+| employees           |
+| enrollment_2nf      |
+| enrollment_3nf      |
+| orders              |
+| products            |
+| projects            |
+| sales               |
+| student_2nf         |
+| student_course_1nf  |
+| student_details     |
+| students            |
+| studentscores       |
+| trainer_3nf         |
++---------------------+
+16 rows in set (0.01 sec)
+
+mysql> DROP DATABASE DA7;
+Query OK, 16 rows affected (0.20 sec)
+
+mysql> CREATE DATABASE DA6;
+ERROR 1007 (HY000): Can't create database 'da6'; database exists
+mysql> CREATE DATABASE DA7;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> USE DA7;
+Database changed
+mysql> CREATE TABLE Students (
+    ->     student_id INT PRIMARY KEY,
+    ->     student_name VARCHAR(50),
+    ->     course VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>
+mysql> INSERT INTO Students VALUES
+    -> (101,'Rahul','Java Full Stack'),
+    -> (102,'Priya','Python Full Stack'),
+    -> (103,'Kiran','Data Science'),
+    -> (104,'Sneha','Java Full Stack'),
+    -> (105,'Ajay','Testing');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql>
+mysql> CREATE TABLE Placed_Students (
+    ->     student_id INT PRIMARY KEY,
+    ->     student_name VARCHAR(50),
+    ->     company_name VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO Placed_Students VALUES
+    -> (103,'Kiran','TCS'),
+    -> (104,'Sneha','Infosys'),
+    -> (105,'Ajay','Wipro'),
+    -> (106,'Pooja','Accenture'),
+    -> (107,'Ramesh','Capgemini');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM STUDENTS;
++------------+--------------+-------------------+
+| student_id | student_name | course            |
++------------+--------------+-------------------+
+|        101 | Rahul        | Java Full Stack   |
+|        102 | Priya        | Python Full Stack |
+|        103 | Kiran        | Data Science      |
+|        104 | Sneha        | Java Full Stack   |
+|        105 | Ajay         | Testing           |
++------------+--------------+-------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT*FROM PLACED_STUDENTS;
++------------+--------------+--------------+
+| student_id | student_name | company_name |
++------------+--------------+--------------+
+|        103 | Kiran        | TCS          |
+|        104 | Sneha        | Infosys      |
+|        105 | Ajay         | Wipro        |
+|        106 | Pooja        | Accenture    |
+|        107 | Ramesh       | Capgemini    |
++------------+--------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> select student_name from students
+    -> union
+    -> select student_name from placed_students
+    -> ;
++--------------+
+| student_name |
++--------------+
+| Rahul        |
+| Priya        |
+| Kiran        |
+| Sneha        |
+| Ajay         |
+| Pooja        |
+| Ramesh       |
++--------------+
+7 rows in set (0.00 sec)
+
+mysql> select student_name from students
+    -> union all
+    -> select student_name from placed_students;
++--------------+
+| student_name |
++--------------+
+| Rahul        |
+| Priya        |
+| Kiran        |
+| Sneha        |
+| Ajay         |
+| Kiran        |
+| Sneha        |
+| Ajay         |
+| Pooja        |
+| Ramesh       |
++--------------+
+10 rows in set (0.00 sec)
+
+mysql> select student_name from students
+    -> )intersect
+    -> ^Cion all
+mysql> select student_name from students
+    -> intersect
+    -> select student_name from placed_students;
++--------------+
+| student_name |
++--------------+
+| Kiran        |
+| Sneha        |
+| Ajay         |
++--------------+
+3 rows in set (0.00 sec)
+
+mysql> select student_name from students
+    -> minus
+    -> select student_name from placed_students;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select student_name from placed_students' at line 3
+mysql> select student_name from students
+    -> except
+    -> select student_name from placed_students;
++--------------+
+| student_name |
++--------------+
+| Rahul        |
+| Priya        |
++--------------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE TABLE TAB1(NUMID INT);
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> CREATE TABLE TAB2(NUMID INT);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO TAB1 VALUES(10),(11),(12),(14);
+Query OK, 4 rows affected (0.07 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO TAB2 VALUES(11),(12),(13),(15);
+Query OK, 4 rows affected (0.07 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM TAB1;
++-------+
+| NUMID |
++-------+
+|    10 |
+|    11 |
+|    12 |
+|    14 |
++-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM TAB2;
++-------+
+| NUMID |
++-------+
+|    11 |
+|    12 |
+|    13 |
+|    15 |
++-------+
+4 rows in set (0.00 sec)
+
+mysql> --- INNER JOIN
+    -> -- INNER JOIN
+    -> ^C
+mysql> SELECT*FROM TAB1
+    -> INNER JOIN TAB2
+    -> ON TAB1.NUMID=TAB2.NUMID;
++-------+-------+
+| NUMID | NUMID |
++-------+-------+
+|    11 |    11 |
+|    12 |    12 |
++-------+-------+
+2 rows in set (0.07 sec)
+
+mysql> SELECT*FROM TAB1
+    -> LEFT JOIN TAB2
+    -> ON TAB1.NUMID=TAB2.NUMID;
++-------+-------+
+| NUMID | NUMID |
++-------+-------+
+|    10 |  NULL |
+|    11 |    11 |
+|    12 |    12 |
+|    14 |  NULL |
++-------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM TAB1
+    -> RIGHT JOIN TAB2
+    -> ON TAB1.NUMID=TAB2.NUMID;
++-------+-------+
+| NUMID | NUMID |
++-------+-------+
+|    11 |    11 |
+|    12 |    12 |
+|  NULL |    13 |
+|  NULL |    15 |
++-------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM TAB1
+    -> LEFT JOIN TAB2
+    -> ON TAB1.NUMID=TAB2.NUMID;
++-------+-------+
+| NUMID | NUMID |
++-------+-------+
+|    10 |  NULL |
+|    11 |    11 |
+|    12 |    12 |
+|    14 |  NULL |
++-------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM TAB1
+    -> LEFT JOIN TAB2
+    -> ON TAB1.NUMID=TAB2.NUMID
+    -> UNION
+    -> SELECT*FROM TAB1
+    -> RIGHT JOIN TAB2
+    -> ON TAB1.NUMID=TAB2.NUMID;
++-------+-------+
+| NUMID | NUMID |
++-------+-------+
+|    10 |  NULL |
+|    11 |    11 |
+|    12 |    12 |
+|    14 |  NULL |
+|  NULL |    13 |
+|  NULL |    15 |
++-------+-------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT*FROM TAB1
+    -> ^C
+mysql> SELECT*FROM TAB1 CROSS JOIN TAB2;
++-------+-------+
+| NUMID | NUMID |
++-------+-------+
+|    14 |    11 |
+|    12 |    11 |
+|    11 |    11 |
+|    10 |    11 |
+|    14 |    12 |
+|    12 |    12 |
+|    11 |    12 |
+|    10 |    12 |
+|    14 |    13 |
+|    12 |    13 |
+|    11 |    13 |
+|    10 |    13 |
+|    14 |    15 |
+|    12 |    15 |
+|    11 |    15 |
+|    10 |    15 |
++-------+-------+
+16 rows in set (0.00 sec)
+
+mysql>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
